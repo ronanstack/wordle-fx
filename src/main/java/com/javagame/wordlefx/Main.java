@@ -5,7 +5,11 @@ import javafx.application.Application;
 
 public class Main {
 
-    // TODO: add CSS styling; add functionality; add changing grid/button appearance
+    // TODO: add letter comparison (submission vs answer) on submission; add tile color changing (green, yellow, grey)
+    // TODO: add functionality to on-screen keyboard and control buttons; add end screen (win/lose)
+    // TODO: add full word list; add CSS styling; add documentation; add tests
+
+    // Improvements: add validation for whether submitted words are real
 
     public static void main(String[] args) {
         Application.launch(AppLauncher.class);

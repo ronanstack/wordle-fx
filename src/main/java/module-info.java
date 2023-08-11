@@ -16,4 +16,5 @@ module com.javagame.wordlefx {
     opens com.javagame.wordlefx.controller to javafx.fxml;
     exports com.javagame.wordlefx.view;
     opens com.javagame.wordlefx.view to javafx.graphics;
+    exports com.javagame.wordlefx.model;
 }

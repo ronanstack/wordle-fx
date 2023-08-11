@@ -26,17 +26,18 @@ public class View implements FXComponent, ModelObserver {
     @Override
     public Parent render() {
         this.layout = new VBox();
+        this.layout.getStyleClass().add("wordle-layout");
 
         Header header = new Header(this.controller);
         Board board = new Board(this.controller);
         KeyboardDisplay keyboardDisplay = new KeyboardDisplay(this.controller);
         Controls controls = new Controls(this.controller);
 
-        layout.getChildren().add(header.render());
-        layout.getChildren().add(board.render());
-        layout.getChildren().add(keyboardDisplay.render());
-        layout.getChildren().add(controls.render());
+        this.layout.getChildren().add(header.render());
+        this.layout.getChildren().add(board.render());
+        this.layout.getChildren().add(keyboardDisplay.render());
+        this.layout.getChildren().add(controls.render());
 
-        return layout;
+        return this.layout;
     }
 }
