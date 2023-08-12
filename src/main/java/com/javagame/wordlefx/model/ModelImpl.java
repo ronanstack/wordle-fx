@@ -18,6 +18,17 @@ public class ModelImpl implements Model {
         this.observers = new ArrayList<>();
         this.letters = new ArrayList<>();
         this.words = new ArrayList<>();
+
+        this.generateWordsList();
+        this.generateWord();
+        System.out.println(this.letters);
+    }
+
+//    public void addLetter(String letter) {
+//        // notifyObservers();
+//    }
+
+    private void generateWordsList() {
         String file = "src/main/resources/com/javagame/wordlefx/words.txt";
         try {
             BufferedReader reader = new BufferedReader(new FileReader(file));
@@ -27,14 +38,7 @@ public class ModelImpl implements Model {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-
-        this.generateWord();
-        System.out.println(this.letters);
     }
-
-//    public void addLetter(String letter) {
-//        // notifyObservers();
-//    }
 
     public void generateWord() {
         letters.clear();
