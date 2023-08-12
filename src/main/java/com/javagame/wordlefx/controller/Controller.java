@@ -13,4 +13,6 @@ public interface Controller {
 
     List<Color> submitWord(List<String> word);
 
+    String getWord();
+
 }

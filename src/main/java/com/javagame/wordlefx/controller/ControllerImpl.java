@@ -28,4 +28,9 @@ public class ControllerImpl implements Controller {
         return this.model.checkWord(word);
     }
 
+    @Override
+    public String getWord() {
+        return this.model.getWord();
+    }
+
 }

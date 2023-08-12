@@ -94,12 +94,12 @@ public class Board implements FXComponent {
                                     rect.setFill(tileColors.get(i));
                                 }
                                 if (!tileColors.contains(Color.YELLOW) && !tileColors.contains(Color.DARKGRAY)) {
-                                    this.displayEndScreen(1, currentGrid[1]);
+                                    this.displayEndScreen(1, currentGrid[1]+1);
                                     return;
                                 }
 
                                 if (currentGrid[1] == 5) {
-                                    this.displayEndScreen(0, currentGrid[1]);
+                                    this.displayEndScreen(0, currentGrid[1]+1);
                                     return;
                                 }
                                 if (currentGrid[0] == 5) {
@@ -136,7 +136,7 @@ public class Board implements FXComponent {
         if (result == 1) {
             endText.setText("You won in " + guesses + " guesses!");
         } else {
-            endText.setText("You lost.");
+            endText.setText("You lost. The word was " + this.controller.getWord() + ".");
         }
         endScreen.getChildren().add(endText);
 

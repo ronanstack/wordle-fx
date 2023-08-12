@@ -14,4 +14,6 @@ public interface Model {
 
     List<Color> checkWord(List<String> word);
 
+    String getWord();
+
 }

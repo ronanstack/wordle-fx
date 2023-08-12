@@ -5,7 +5,7 @@ import javafx.application.Application;
 
 public class Main {
 
-    // TODO: add functionality to on-screen keyboard and control buttons; add full word list
+    // TODO: add functionality to on-screen keyboard and control buttons
     // TODO: add CSS styling; split larger methods; add documentation; add tests
 
     // Improvements: add validation for whether submitted words are real

@@ -3,8 +3,11 @@ package com.javagame.wordlefx.model;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.io.BufferedReader;
+import java.io.FileReader;
 
 public class ModelImpl implements Model {
     private List<ModelObserver> observers;
@@ -15,11 +18,16 @@ public class ModelImpl implements Model {
         this.observers = new ArrayList<>();
         this.letters = new ArrayList<>();
         this.words = new ArrayList<>();
-        // TODO: make txt file with words; add words to list
-        this.words.add("apple"); // test words
-        this.words.add("smile");
-        this.words.add("hello");
-        this.words.add("world");
+        String file = "src/main/resources/com/javagame/wordlefx/words.txt";
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            String line = reader.readLine();
+            String[] words = line.split(", ");
+            this.words.addAll(Arrays.asList(words));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
         this.generateWord();
         System.out.println(this.letters);
     }
@@ -54,6 +62,14 @@ public class ModelImpl implements Model {
             System.out.println("Submission incorrect");
         }
         return tileColors;
+    }
+
+    public String getWord() {
+        String word = "";
+        for (String letter : this.letters) {
+            word = word.concat(letter);
+        }
+        return word;
     }
 
     @Override
