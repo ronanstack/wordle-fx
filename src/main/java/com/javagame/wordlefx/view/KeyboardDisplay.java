@@ -31,7 +31,7 @@ public class KeyboardDisplay implements FXComponent {
             letterButton.setOnAction(
                     (ActionEvent click) -> {
                         // TODO: button clicks to operate the same as keys
-                        this.controller.clickLetter(letterButton.getText());
+                        // this.controller.clickLetter(letterButton.getText());
                     });
             if (i < 10) {
                 upperRow.getChildren().add(letterButton);

@@ -54,7 +54,7 @@ public class Board implements FXComponent {
                                         letter.setText(keyCode.toString());
                                     }
 
-                                    this.controller.pressKey(keyCode);
+                                    // this.controller.pressKey(keyCode);
 
                                     if (currentGrid[0] < 5) {
                                         currentGrid[0]++;
@@ -83,8 +83,18 @@ public class Board implements FXComponent {
                                     Label label = (Label) stackPane.getChildren().get(1);
                                     word.add(label.getText());
                                 }
-                                this.controller.submitWord(word);
+
                                 System.out.println("Submitted: " + word);
+                                List<Color> tileColors = this.controller.submitWord(word);
+                                for (int i = 0; i < 5; i++) {
+                                    StackPane stackPane = (StackPane) this.grid.getChildren().get(currentGrid[1] * 5 + i);
+                                    Rectangle rect = (Rectangle) stackPane.getChildren().get(0);
+                                    rect.setFill(tileColors.get(i));
+                                }
+                                if (!tileColors.contains(Color.YELLOW) && !tileColors.contains(Color.DARKGRAY)) {
+                                    return;
+                                }
+
                                 if (currentGrid[1] == 5) {
                                     return;
                                 }
