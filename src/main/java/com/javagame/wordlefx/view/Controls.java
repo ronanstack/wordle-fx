@@ -16,10 +16,11 @@ public class Controls implements FXComponent {
     public Parent render() {
         HBox layout = new HBox();
 
-        Button reset = new Button("Reset"); // TODO: change text for arrow symbol
-        Button playAgain = new Button("Play Again"); // TODO: change text for next symbol
+        Button reset = new Button("Reset"); // TODO: change text for symbol
+        Button playAgain = new Button("Play Again"); // TODO: change text for symbol
+        Button giveUp = new Button("Give Up"); // TODO: change text for symbol
 
-        layout.getChildren().addAll(reset, playAgain);
+        layout.getChildren().addAll(reset, playAgain, giveUp);
 
         return layout;
     }

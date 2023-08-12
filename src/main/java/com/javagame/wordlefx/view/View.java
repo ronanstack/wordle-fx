@@ -4,6 +4,7 @@ import com.javagame.wordlefx.controller.Controller;
 import com.javagame.wordlefx.model.Model;
 import com.javagame.wordlefx.model.ModelObserver;
 import javafx.scene.Parent;
+import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
 public class View implements FXComponent, ModelObserver {

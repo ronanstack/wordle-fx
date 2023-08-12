@@ -19,16 +19,18 @@ import java.util.List;
 
 public class Board implements FXComponent {
     private Controller controller;
-    private GridPane grid;
+    private VBox layout;
 
     public Board(Controller controller) {
 
         this.controller = controller;
-        this.grid = new GridPane();
+        this.layout = new VBox();
     }
 
     @Override
     public Parent render() {
+        GridPane grid = new GridPane();
+
         // Make a 5x6 grid of squares
         int[] currentGrid = {0, 0};
 
@@ -60,7 +62,7 @@ public class Board implements FXComponent {
                                         currentGrid[0]++;
                                     }
                                     if (currentGrid[1] < 6 && currentGrid[0] < 5) {
-                                        StackPane nextStack = (StackPane) this.grid.getChildren().get(currentGrid[1] * 5 + currentGrid[0]);
+                                        StackPane nextStack = (StackPane) grid.getChildren().get(currentGrid[1] * 5 + currentGrid[0]);
                                         nextStack.requestFocus();
                                     }
                                 }
@@ -71,7 +73,7 @@ public class Board implements FXComponent {
                                         currentGrid[0] = 4;
                                         currentGrid[1]--;
                                     }
-                                    StackPane prevStack = (StackPane) this.grid.getChildren().get(currentGrid[1] * 5 + currentGrid[0]);
+                                    StackPane prevStack = (StackPane) grid.getChildren().get(currentGrid[1] * 5 + currentGrid[0]);
                                     Label prevLetter = (Label) prevStack.getChildren().get(1);
                                     prevLetter.setText("");
                                     prevStack.requestFocus();
@@ -79,7 +81,7 @@ public class Board implements FXComponent {
                             } else if (keyCode == KeyCode.ENTER) {
                                 List<String> word = new ArrayList<>();
                                 for (int i = 0; i < 5; i++) {
-                                    StackPane stackPane = (StackPane) this.grid.getChildren().get(currentGrid[1] * 5 + i);
+                                    StackPane stackPane = (StackPane) grid.getChildren().get(currentGrid[1] * 5 + i);
                                     Label label = (Label) stackPane.getChildren().get(1);
                                     word.add(label.getText());
                                 }
@@ -87,15 +89,17 @@ public class Board implements FXComponent {
                                 System.out.println("Submitted: " + word);
                                 List<Color> tileColors = this.controller.submitWord(word);
                                 for (int i = 0; i < 5; i++) {
-                                    StackPane stackPane = (StackPane) this.grid.getChildren().get(currentGrid[1] * 5 + i);
+                                    StackPane stackPane = (StackPane) grid.getChildren().get(currentGrid[1] * 5 + i);
                                     Rectangle rect = (Rectangle) stackPane.getChildren().get(0);
                                     rect.setFill(tileColors.get(i));
                                 }
                                 if (!tileColors.contains(Color.YELLOW) && !tileColors.contains(Color.DARKGRAY)) {
+                                    this.displayEndScreen(1, currentGrid[1]);
                                     return;
                                 }
 
                                 if (currentGrid[1] == 5) {
+                                    this.displayEndScreen(0, currentGrid[1]);
                                     return;
                                 }
                                 if (currentGrid[0] == 5) {
@@ -107,7 +111,7 @@ public class Board implements FXComponent {
                                 } else {
                                     throw new IllegalArgumentException("Row is not full");
                                 }
-                                StackPane nextStack = (StackPane) this.grid.getChildren().get(currentGrid[1] * 5 + currentGrid[0]);
+                                StackPane nextStack = (StackPane) grid.getChildren().get(currentGrid[1] * 5 + currentGrid[0]);
                                 nextStack.requestFocus();
                             } else {
                                 throw new IllegalArgumentException("Key pressed is not a letter");
@@ -115,14 +119,29 @@ public class Board implements FXComponent {
 
                         });
 
-                this.grid.add(stack, col, row);
+                grid.add(stack, col, row);
                 if (currentGrid[0] == 0 && currentGrid[1] == 0) {
                     stack.requestFocus();
                 }
             }
         }
+        this.layout.getChildren().add(grid);
 
-        return this.grid;
+        return this.layout;
+    }
+
+    public void displayEndScreen(int result, int guesses) {
+        VBox endScreen = new VBox();
+        Label endText = new Label();
+        if (result == 1) {
+            endText.setText("You won in " + guesses + " guesses!");
+        } else {
+            endText.setText("You lost.");
+        }
+        endScreen.getChildren().add(endText);
+
+        this.layout.getChildren().remove(0);
+        this.layout.getChildren().add(endScreen);
     }
 
 }
