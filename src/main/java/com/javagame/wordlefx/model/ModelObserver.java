@@ -1,6 +1,6 @@
 package com.javagame.wordlefx.model;
 
 public interface ModelObserver {
-    /** When a model value is changed, the model calls update() on all active ModelObserver objects */
+    /** When a model value is changed, the model updates all active ModelObserver objects */
     void update(Model model);
 }

@@ -24,11 +24,6 @@ public class ControllerImpl implements Controller {
     }
 
     @Override
-    public String getLetter() {
-        return this.model.getNextLetter();
-    }
-
-    @Override
     public List<Color> submitWord(List<String> word) {
         return this.model.checkWord(word);
     }

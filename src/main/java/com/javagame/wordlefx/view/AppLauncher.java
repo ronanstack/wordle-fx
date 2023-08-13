@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 
 public class AppLauncher extends Application {
 
+    /** Establish the MVC, scene, and stage */
     @Override
     public void start(Stage stage) {
 

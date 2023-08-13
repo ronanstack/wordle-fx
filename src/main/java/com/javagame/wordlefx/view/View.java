@@ -22,9 +22,9 @@ public class View implements FXComponent {
         this.layout = new VBox();
         // this.layout.getStyleClass().add("view");
 
-        Header header = new Header(this.controller);
-        Board board = new Board(this.controller, this.model);
-        KeyboardDisplay keyboardDisplay = new KeyboardDisplay(this.controller, board);
+        Header header = new Header(this.controller); // Header text
+        Board board = new Board(this.controller, this.model); // Game board
+        KeyboardDisplay keyboardDisplay = new KeyboardDisplay(this.controller, board); // On-screen keyboard
 
         this.layout.getChildren().add(header.render());
         this.layout.getChildren().add(board.render());

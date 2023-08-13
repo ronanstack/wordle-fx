@@ -53,6 +53,9 @@ public class KeyboardDisplay implements FXComponent {
         return keyboard;
     }
 
+    /** Adds a click handler to the given button.
+     * On click, the button adds its corresponding letter
+     * to the board. */
     private void addClickHandlers(Button button) {
         button.setOnAction(
                 (ActionEvent click) -> {

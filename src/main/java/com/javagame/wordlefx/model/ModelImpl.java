@@ -29,6 +29,7 @@ public class ModelImpl implements Model {
         System.out.println(this.letters);
     }
 
+    @Override
     public void addLetter(String letter) {
         for (int row = 0; row < this.grid.length; row++) {
             for (int col = 0; col < this.grid[row].length; col++) {
@@ -44,6 +45,7 @@ public class ModelImpl implements Model {
         }
     }
 
+    @Override
     public void delLetter() {
         for (int row = this.grid.length - 1; row >= 0; row--) {
             for (int col = this.grid[row].length - 1; col >= 0; col--) {
@@ -59,6 +61,7 @@ public class ModelImpl implements Model {
         }
     }
 
+    /** Updates the current grid index */
     private void updateCurrentGrid(int i) {
         if (i == 0) {
             if (this.currentGrid[0] < 5) {
@@ -69,23 +72,7 @@ public class ModelImpl implements Model {
         }
     }
 
-    public String getNextLetter() {
-        for (int row = 0; row < this.grid.length; row++) {
-            for (int col = 0; col < this.grid[row].length; col++) {
-                if (this.grid[row][col].equals("")) {
-                    if (row != 0 && col == 0) {
-                        return this.grid[row-1][4];
-                    } else {
-                        return this.grid[row][col-1];
-                    }
-                } else if (row == 5 && col == 4) {
-                    return this.grid[row][col];
-                }
-            }
-        }
-        return "";
-    }
-
+    @Override
     public String getGridIndex(int row, int col) {
         if (row < 0 || row > 5 || col < 0 || col > 4) {
             throw new IllegalArgumentException("Invalid grid index");
@@ -94,12 +81,14 @@ public class ModelImpl implements Model {
         }
     }
 
+    /** Generates a new grid */
     private void generateGrid() {
         for (String[] strings : this.grid) {
             Arrays.fill(strings, "");
         }
     }
 
+    /** Retrieves the list of words from words.txt */
     private void generateWordsList() {
         String file = "src/main/resources/com/javagame/wordlefx/words.txt";
         try {
@@ -112,7 +101,8 @@ public class ModelImpl implements Model {
         }
     }
 
-    public void generateWord() {
+    /** Generates a new solution word */
+    private void generateWord() {
         letters.clear();
         String word = this.words.get(new Random().nextInt(words.size()));
         for (int i = 0; i < word.length(); i++) {
@@ -120,6 +110,7 @@ public class ModelImpl implements Model {
         }
     }
 
+    @Override
     public List<Color> checkWord(List<String> word) {
         List<Color> tileColors = new ArrayList<>();
         for (int i = 0; i < word.size(); i++) {
@@ -140,6 +131,7 @@ public class ModelImpl implements Model {
         return tileColors;
     }
 
+    @Override
     public String getWord() {
         String word = "";
         for (String letter : this.letters) {
@@ -148,6 +140,7 @@ public class ModelImpl implements Model {
         return word;
     }
 
+    @Override
     public int[] getCurrentGrid() {
         return this.currentGrid;
     }
@@ -162,6 +155,7 @@ public class ModelImpl implements Model {
         this.observers.remove(observer);
     }
 
+    /** Updates all observers */
     private void notifyObservers() {
         for (ModelObserver observer : this.observers) {
             observer.update(this);

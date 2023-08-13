@@ -45,7 +45,7 @@ public class Board implements FXComponent, ModelObserver {
                 square.setStroke(Color.BLACK);
 
                 Label letter = new Label("");
-                StackPane stack = new StackPane(square, letter);
+                StackPane stack = new StackPane(square, letter); // Grid tiles
                 stack.setFocusTraversable(true);
 
                 this.addKeyHandlers(stack, grid, currentGrid);
@@ -62,6 +62,11 @@ public class Board implements FXComponent, ModelObserver {
         return this.layout;
     }
 
+    /** Adds a key handler to the given stack pane.
+     * When a letter key is pressed, adds the corresponding letter
+     * to the next pane in the grid. When backspace pressed, delete
+     * the previous letter. When enter pressed, if the row is full,
+     * submit the word. */
     private void addKeyHandlers(StackPane stack, GridPane grid, int[] currentGrid) {
         Label letter = (Label) stack.getChildren().get(1);
         stack.setOnKeyPressed(
@@ -130,6 +135,7 @@ public class Board implements FXComponent, ModelObserver {
                 });
     }
 
+    /** Displays the end screen with win/loss result and number of guesses taken if won. */
     private void displayEndScreen(int result, int guesses) {
         VBox endScreen = new VBox();
         endScreen.setMinHeight(360);
@@ -149,6 +155,7 @@ public class Board implements FXComponent, ModelObserver {
         this.layout.getChildren().add(endScreen);
     }
 
+    /** Focuses the next empty tile in the grid. */
     public void focusNext() {
         GridPane grid = (GridPane) this.layout.getChildren().get(0);
 
