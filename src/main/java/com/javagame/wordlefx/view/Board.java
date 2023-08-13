@@ -34,6 +34,8 @@ public class Board implements FXComponent, ModelObserver {
     @Override
     public Parent render() {
         GridPane grid = new GridPane();
+        grid.setMaxHeight(360);
+        grid.setMaxWidth(300);
         int[] currentGrid = this.controller.getCurrentGrid();
 
         for (int row = 0; row < 6; row++) {
@@ -54,6 +56,7 @@ public class Board implements FXComponent, ModelObserver {
                 }
             }
         }
+        this.layout.getStyleClass().add("board");
         this.layout.getChildren().add(grid);
 
         return this.layout;
@@ -88,6 +91,9 @@ public class Board implements FXComponent, ModelObserver {
                         for (int i = 0; i < 5; i++) {
                             StackPane stackPane = (StackPane) grid.getChildren().get(currentGrid[1] * 5 + i);
                             Label label = (Label) stackPane.getChildren().get(1);
+                            if (label.getText().equals("")) {
+                                throw new IllegalArgumentException("Row is not full");
+                            }
                             word.add(label.getText());
                         }
 
@@ -126,12 +132,17 @@ public class Board implements FXComponent, ModelObserver {
 
     private void displayEndScreen(int result, int guesses) {
         VBox endScreen = new VBox();
+        endScreen.setMinHeight(360);
+        endScreen.setMinWidth(300);
         Label endText = new Label();
         if (result == 1) {
             endText.setText("You won in " + guesses + " guesses!");
+            endScreen.setStyle("-fx-border-color: green;");
         } else {
             endText.setText("You lost. The word was " + this.controller.getWord() + ".");
+            endScreen.setStyle("-fx-border-color: red;");
         }
+        endText.getStyleClass().add("end-text");
         endScreen.getChildren().add(endText);
 
         this.layout.getChildren().remove(0);

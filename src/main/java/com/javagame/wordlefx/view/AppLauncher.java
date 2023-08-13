@@ -19,7 +19,7 @@ public class AppLauncher extends Application {
         FXComponent view = new View(controller, model);
 
         // scene
-        Scene scene = new Scene(view.render());
+        Scene scene = new Scene(view.render(), 800, 600);
         scene.getStylesheets().add("main.css");
         stage.setScene(scene);
 

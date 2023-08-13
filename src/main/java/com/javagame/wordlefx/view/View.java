@@ -20,7 +20,7 @@ public class View implements FXComponent {
     @Override
     public Parent render() {
         this.layout = new VBox();
-        this.layout.getStyleClass().add("wordle-layout");
+        // this.layout.getStyleClass().add("view");
 
         Header header = new Header(this.controller);
         Board board = new Board(this.controller, this.model);

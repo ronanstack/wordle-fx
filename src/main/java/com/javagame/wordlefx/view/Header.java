@@ -16,7 +16,7 @@ public class Header implements FXComponent {
     public Parent render() {
         HBox layout = new HBox();
 
-        layout.getStyleClass().add("header-layout");
+        layout.getStyleClass().add("header");
         Text text = new Text("Wordle-fx");
         layout.getChildren().add(text);
 

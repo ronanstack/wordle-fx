@@ -43,8 +43,11 @@ public class KeyboardDisplay implements FXComponent {
             }
         }
 
+        upperRow.getStyleClass().add("upper-row");
         keyboard.getChildren().add(upperRow);
+        middleRow.getStyleClass().add("middle-row");
         keyboard.getChildren().add(middleRow);
+        lowerRow.getStyleClass().add("lower-row");
         keyboard.getChildren().add(lowerRow);
 
         return keyboard;
