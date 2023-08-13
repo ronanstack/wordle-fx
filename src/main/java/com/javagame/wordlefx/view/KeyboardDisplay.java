@@ -6,14 +6,17 @@ import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.event.ActionEvent;
 
 public class KeyboardDisplay implements FXComponent {
     private Controller controller;
+    private Board board;
 
-    public KeyboardDisplay(Controller controller) {
+    public KeyboardDisplay(Controller controller, Board board) {
         this.controller = controller;
+        this.board = board;
     }
 
     @Override
@@ -28,11 +31,9 @@ public class KeyboardDisplay implements FXComponent {
             char letter = (char) (i + 65);
             Button letterButton = new Button();
             letterButton.setText(String.valueOf(letter));
-            letterButton.setOnAction(
-                    (ActionEvent click) -> {
-                        // TODO: button clicks to operate the same as keys
-                        // this.controller.clickLetter(letterButton.getText());
-                    });
+
+            this.addClickHandlers(letterButton);
+
             if (i < 10) {
                 upperRow.getChildren().add(letterButton);
             } else if (i < 19) {
@@ -48,4 +49,14 @@ public class KeyboardDisplay implements FXComponent {
 
         return keyboard;
     }
+
+    private void addClickHandlers(Button button) {
+        button.setOnAction(
+                (ActionEvent click) -> {
+                    System.out.println("Clicked " + button.getText());
+                    this.controller.addLetter(button.getText());
+                    this.board.focusNext();
+                });
+    }
+
 }

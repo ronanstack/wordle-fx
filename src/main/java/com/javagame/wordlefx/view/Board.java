@@ -1,6 +1,8 @@
 package com.javagame.wordlefx.view;
 
 import com.javagame.wordlefx.controller.Controller;
+import com.javagame.wordlefx.model.Model;
+import com.javagame.wordlefx.model.ModelObserver;
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
@@ -17,20 +19,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Board implements FXComponent {
+public class Board implements FXComponent, ModelObserver {
     private Controller controller;
     private VBox layout;
+    private Model model;
 
-    public Board(Controller controller) {
-
+    public Board(Controller controller, Model model) {
         this.controller = controller;
         this.layout = new VBox();
+        this.model = model;
+        model.addObserver(this);
     }
 
     @Override
     public Parent render() {
         GridPane grid = new GridPane();
-        int[] currentGrid = {0, 0};
+        int[] currentGrid = this.controller.getCurrentGrid();
 
         for (int row = 0; row < 6; row++) {
             for (int col = 0; col < 5; col++) {
@@ -66,29 +70,17 @@ public class Board implements FXComponent {
                         } else {
                             System.out.println(keyCode);
                             if (letter.getText().equals("")) {
-                                letter.setText(keyCode.toString());
+                                this.controller.addLetter(keyCode.toString());
                             }
 
-                            // this.controller.pressKey(keyCode);
-
-                            if (currentGrid[0] < 5) {
-                                currentGrid[0]++;
-                            }
                             if (currentGrid[1] < 6 && currentGrid[0] < 5) {
-                                StackPane nextStack = (StackPane) grid.getChildren().get(currentGrid[1] * 5 + currentGrid[0]);
-                                nextStack.requestFocus();
+                                this.focusNext();
                             }
                         }
                     } else if (keyCode == KeyCode.BACK_SPACE) {
-                        if (currentGrid[0] > 0 || currentGrid[1] > 0) {
-                            currentGrid[0]--;
-                            if (currentGrid[0] < 0) {
-                                currentGrid[0] = 4;
-                                currentGrid[1]--;
-                            }
+                        if (currentGrid[0] > 0) {
+                            this.controller.delLetter();
                             StackPane prevStack = (StackPane) grid.getChildren().get(currentGrid[1] * 5 + currentGrid[0]);
-                            Label prevLetter = (Label) prevStack.getChildren().get(1);
-                            prevLetter.setText("");
                             prevStack.requestFocus();
                         }
                     } else if (keyCode == KeyCode.ENTER) {
@@ -124,8 +116,7 @@ public class Board implements FXComponent {
                         } else {
                             throw new IllegalArgumentException("Row is not full");
                         }
-                        StackPane nextStack = (StackPane) grid.getChildren().get(currentGrid[1] * 5 + currentGrid[0]);
-                        nextStack.requestFocus();
+                        this.focusNext();
                     } else {
                         throw new IllegalArgumentException("Key pressed is not a letter");
                     }
@@ -133,7 +124,7 @@ public class Board implements FXComponent {
                 });
     }
 
-    public void displayEndScreen(int result, int guesses) {
+    private void displayEndScreen(int result, int guesses) {
         VBox endScreen = new VBox();
         Label endText = new Label();
         if (result == 1) {
@@ -145,6 +136,36 @@ public class Board implements FXComponent {
 
         this.layout.getChildren().remove(0);
         this.layout.getChildren().add(endScreen);
+    }
+
+    public void focusNext() {
+        GridPane grid = (GridPane) this.layout.getChildren().get(0);
+
+        for (int i = 0; i < grid.getChildren().size(); i++) {
+            StackPane stack = (StackPane) grid.getChildren().get(i);
+            Label letter = (Label) stack.getChildren().get(1);
+
+            if (letter.getText().equals("")) {
+                stack.requestFocus();
+                return;
+            }
+        }
+    }
+
+    @Override
+    public void update(Model model) {
+        this.model = model;
+        GridPane grid = (GridPane) this.layout.getChildren().get(0);
+
+        for (int row = 0; row < 6; row++) {
+            for (int col = 0; col < 5; col++) {
+                StackPane stack = (StackPane) grid.getChildren().get(row * 5 + col);
+                Label letter = (Label) stack.getChildren().get(1);
+
+                String text = model.getGridIndex(row, col);
+                letter.setText(text);
+            }
+        }
     }
 
 }

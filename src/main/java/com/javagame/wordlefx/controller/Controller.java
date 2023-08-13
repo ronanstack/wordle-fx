@@ -7,12 +7,16 @@ import java.util.List;
 
 public interface Controller {
 
-//    void pressKey(KeyCode keyCode);
-//
-//    void clickLetter(String letter);
+    void addLetter(String letter);
+
+    void delLetter();
+
+    String getLetter();
 
     List<Color> submitWord(List<String> word);
 
     String getWord();
+
+    int[] getCurrentGrid();
 
 }

@@ -6,7 +6,13 @@ import java.util.List;
 
 public interface Model {
 
-//    void addLetter(String letter);
+    void addLetter(String letter);
+
+    void delLetter();
+
+    String getNextLetter();
+
+    String getGridIndex(int row, int col);
 
     void addObserver(ModelObserver observer);
 
@@ -15,5 +21,7 @@ public interface Model {
     List<Color> checkWord(List<String> word);
 
     String getWord();
+
+    int[] getCurrentGrid();
 
 }

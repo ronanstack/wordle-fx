@@ -13,15 +13,20 @@ public class ControllerImpl implements Controller {
         this.model = model;
     }
 
-//    @Override
-//    public void pressKey(KeyCode keyCode) {
-//        this.model.addLetter(keyCode.getChar());
-//    }
-//
-//    @Override
-//    public void clickLetter(String letter) {
-//        this.model.addLetter(letter);
-//    }
+    @Override
+    public void addLetter(String letter) {
+        this.model.addLetter(letter);
+    }
+
+    @Override
+    public void delLetter() {
+        this.model.delLetter();
+    }
+
+    @Override
+    public String getLetter() {
+        return this.model.getNextLetter();
+    }
 
     @Override
     public List<Color> submitWord(List<String> word) {
@@ -31,6 +36,11 @@ public class ControllerImpl implements Controller {
     @Override
     public String getWord() {
         return this.model.getWord();
+    }
+
+    @Override
+    public int[] getCurrentGrid() {
+        return this.model.getCurrentGrid();
     }
 
 }
